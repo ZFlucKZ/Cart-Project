@@ -6,20 +6,6 @@ import { faPlus, faMinus, faTrash } from '@fortawesome/fontawesome-free-solid';
 fontawesome.library.add(faPlus, faMinus, faTrash);
 
 class CartItem extends React.Component {
-  decreaseQuantity = () => {
-    const { qty } = this.state;
-
-    if (qty === 0) {
-      return;
-    }
-
-    this.setState((prevState) => {
-      return {
-        qty: prevState.qty - 1,
-      };
-    });
-  };
-
   render() {
     // console.log('this.props : ', this.props);
     const { price, title, qty } = this.props.product;
