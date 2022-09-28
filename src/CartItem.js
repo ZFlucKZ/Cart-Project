@@ -16,7 +16,7 @@ class CartItem extends React.Component {
     };
   }
 
-  increasedQuantity = () => {
+  increaseQuantity = () => {
     // this.state.qty += 1;
     // console.log('this', this.state);
 
@@ -29,6 +29,20 @@ class CartItem extends React.Component {
     this.setState((prevState) => {
       return {
         qty: prevState.qty + 1,
+      };
+    });
+  };
+
+  decreaseQuantity = () => {
+    const { qty } = this.state;
+
+    if (qty === 0) {
+      return;
+    }
+
+    this.setState((prevState) => {
+      return {
+        qty: prevState.qty - 1,
       };
     });
   };
@@ -49,9 +63,13 @@ class CartItem extends React.Component {
             <FontAwesomeIcon
               icon="plus"
               className="action-icons"
-              onClick={this.increasedQuantity}
+              onClick={this.increaseQuantity}
             />
-            <FontAwesomeIcon icon="minus" className="action-icons" />
+            <FontAwesomeIcon
+              icon="minus"
+              className="action-icons"
+              onClick={this.decreaseQuantity}
+            />
             <FontAwesomeIcon icon="trash" className="action-icons" />
           </div>
         </div>
