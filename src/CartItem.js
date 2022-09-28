@@ -6,16 +6,6 @@ import { faPlus, faMinus, faTrash } from '@fortawesome/fontawesome-free-solid';
 fontawesome.library.add(faPlus, faMinus, faTrash);
 
 class CartItem extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      price: 999,
-      title: 'Phone',
-      qty: 1,
-      img: '',
-    };
-  }
-
   increaseQuantity = () => {
     // this.state.qty += 1;
     // console.log('this', this.state);
@@ -48,7 +38,8 @@ class CartItem extends React.Component {
   };
 
   render() {
-    const { price, title, qty } = this.state;
+    console.log('this.prop : ', this.props);
+    const { price, title, qty } = this.props.product;
     return (
       <div className="cart-item">
         <div className="left-block">
