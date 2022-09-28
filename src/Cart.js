@@ -11,18 +11,21 @@ class Cart extends React.Component {
           title: 'Phone',
           qty: 1,
           img: '',
+          id: 1,
         },
         {
           price: 99,
           title: 'Watch',
           qty: 10,
           img: '',
+          id: 2,
         },
         {
           price: 999,
           title: 'Mobile',
           qty: 4,
           img: '',
+          id: 3,
         },
       ],
     };
@@ -56,6 +59,16 @@ class Cart extends React.Component {
     });
   };
 
+  handleDeleteProduct = (id) => {
+    const { products } = this.state;
+
+    const items = products.filter((product) => product.id !== id);
+
+    this.setState({
+      products: items,
+    });
+  };
+
   render() {
     const { products } = this.state;
     return (
@@ -67,6 +80,7 @@ class Cart extends React.Component {
               key={product.id}
               onIncreaseQuantity={this.handleIncreaseQuantity}
               onDecreaseQuantity={this.handleDecreaseQuantity}
+              onDeleteProduct={this.handleDeleteProduct}
             />
           );
         })}

@@ -44,7 +44,11 @@ class CartItem extends React.Component {
               className="action-icons"
               onClick={() => this.props.onDecreaseQuantity(this.props.product)}
             />
-            <FontAwesomeIcon icon="trash" className="action-icons" />
+            <FontAwesomeIcon
+              icon="trash"
+              className="action-icons"
+              onClick={() => this.props.onDeleteProduct(this.props.product.id)}
+            />
           </div>
         </div>
       </div>
