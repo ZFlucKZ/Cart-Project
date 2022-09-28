@@ -6,23 +6,6 @@ import { faPlus, faMinus, faTrash } from '@fortawesome/fontawesome-free-solid';
 fontawesome.library.add(faPlus, faMinus, faTrash);
 
 class CartItem extends React.Component {
-  increaseQuantity = () => {
-    // this.state.qty += 1;
-    // console.log('this', this.state);
-
-    // setState form 1
-    // this.setState({
-    //   qty: this.state.qty + 1,
-    // });
-
-    // setState form 2
-    this.setState((prevState) => {
-      return {
-        qty: prevState.qty + 1,
-      };
-    });
-  };
-
   decreaseQuantity = () => {
     const { qty } = this.state;
 
@@ -54,12 +37,12 @@ class CartItem extends React.Component {
             <FontAwesomeIcon
               icon="plus"
               className="action-icons"
-              onClick={this.increaseQuantity}
+              onClick={() => this.props.onIncreaseQuantity(this.props.product)}
             />
             <FontAwesomeIcon
               icon="minus"
               className="action-icons"
-              onClick={this.decreaseQuantity}
+              onClick={() => this.props.onDecreaseQuantity(this.props.product)}
             />
             <FontAwesomeIcon icon="trash" className="action-icons" />
           </div>
