@@ -7,13 +7,13 @@ fontawesome.library.add(faPlus, faMinus, faTrash);
 
 const CartItem = (props) => {
   // console.log('props : ', props);
-  const { price, title, qty } = props.product;
+  const { price, title, qty, img } = props.product;
   const { product, onIncreaseQuantity, onDecreaseQuantity, onDeleteProduct } =
     props;
   return (
     <div className="cart-item">
       <div className="left-block">
-        <img style={styles.image} src={product.img} />
+        <img style={styles.image} src={img} alt={title} />
       </div>
       <div className="right-block">
         <div style={{ fontSize: 25 }}>{title}</div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Cart from './Cart';
 import Navbar from './Navbar';
-import { collection, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot } from 'firebase/firestore';
 import db from './firebase';
 
 class App extends React.Component {
@@ -25,7 +25,7 @@ class App extends React.Component {
           data['id'] = doc.id;
           return data;
         });
-        console.log(productList);
+
         self.setState({
           products: productList,
           loading: false,
@@ -33,13 +33,6 @@ class App extends React.Component {
       });
     };
     getData(db);
-    // getData(db).then((data) => {
-    //   console.log(data);
-    //   this.setState({
-    //     products: data,
-    //     loading: false,
-    //   });
-    // });
   }
 
   handleIncreaseQuantity = (product) => {
@@ -96,11 +89,26 @@ class App extends React.Component {
     return total;
   };
 
+  addProduct = async () => {
+    const productsCol = collection(db, 'products');
+    const newProduct = await addDoc(productsCol, {
+      title: 'Book',
+      price: 10,
+      qty: 1,
+      img: '',
+    });
+    // console.log(newProduct);
+    return;
+  };
+
   render() {
     const { products, loading } = this.state;
     return (
       <div className="App">
         <Navbar count={this.getCartCount()} />
+        <button onClick={this.addProduct} style={{ padding: 20, fontSize: 20 }}>
+          Add a Product
+        </button>
         <Cart
           products={products}
           onIncreaseQuantity={this.handleIncreaseQuantity}
