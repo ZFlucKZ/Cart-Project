@@ -1,35 +1,52 @@
 import React from 'react';
 import Cart from './Cart';
 import Navbar from './Navbar';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: 'AIzaSyBUZY9UVI57gMOTBMYi17BAFv5SYVDJ_8s',
+  authDomain: 'cart-project-aa4f9.firebaseapp.com',
+  databaseURL:
+    'https://cart-project-aa4f9-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'cart-project-aa4f9',
+  storageBucket: 'cart-project-aa4f9.appspot.com',
+  messagingSenderId: '392074555845',
+  appId: '1:392074555845:web:79686a846d5340e3b25bac',
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      products: [
-        {
-          price: 999,
-          title: 'Phone',
-          qty: 1,
-          img: '',
-          id: 1,
-        },
-        {
-          price: 99,
-          title: 'Watch',
-          qty: 10,
-          img: '',
-          id: 2,
-        },
-        {
-          price: 999,
-          title: 'Mobile',
-          qty: 4,
-          img: '',
-          id: 3,
-        },
-      ],
+      products: [],
     };
+  }
+
+  componentDidMount() {
+    // Get a list of cities from your database
+    const getData = async function (db) {
+      const productsCol = collection(db, 'products');
+      const productSnapshot = await getDocs(productsCol);
+      const productList = productSnapshot.docs.map((doc) => {
+        const data = doc.data();
+        data['id'] = doc.id;
+        return data;
+      });
+      // console.log(productList);
+      return productList;
+    };
+
+    getData(db).then((data) =>
+      this.setState({
+        products: data,
+      })
+    );
   }
 
   handleIncreaseQuantity = (product) => {
