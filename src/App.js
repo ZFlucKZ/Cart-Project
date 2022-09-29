@@ -7,6 +7,7 @@ import {
   onSnapshot,
   updateDoc,
   doc,
+  deleteDoc,
 } from 'firebase/firestore';
 import db from './firebase';
 
@@ -74,13 +75,9 @@ class App extends React.Component {
   };
 
   handleDeleteProduct = (id) => {
-    const { products } = this.state;
+    const docRef = doc(db, 'products', id);
 
-    const items = products.filter((product) => product.id !== id);
-
-    this.setState({
-      products: items,
-    });
+    deleteDoc(docRef);
   };
 
   getCartCount = () => {
