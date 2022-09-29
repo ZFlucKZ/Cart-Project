@@ -8,6 +8,10 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  query,
+  where,
+  orderBy,
+  limit,
 } from 'firebase/firestore';
 import db from './firebase';
 
@@ -24,9 +28,14 @@ class App extends React.Component {
     const self = this;
     // Get a list of products from your database
     const getData = async function (db) {
-      var productList;
+      let productList;
       const productsCol = collection(db, 'products');
-      onSnapshot(productsCol, (snapshot) => {
+
+      // Query the Data
+      // const queryPrice = query(productsCol, where('price', '>', 1));
+      const orderByPrice = query(productsCol, orderBy('price', 'desc'));
+
+      onSnapshot(orderByPrice, (snapshot) => {
         productList = snapshot.docs.map((doc) => {
           const data = doc.data();
           data['id'] = doc.id;
