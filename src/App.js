@@ -1,7 +1,13 @@
 import React from 'react';
 import Cart from './Cart';
 import Navbar from './Navbar';
-import { collection, addDoc, onSnapshot } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  updateDoc,
+  doc,
+} from 'firebase/firestore';
 import db from './firebase';
 
 class App extends React.Component {
@@ -38,13 +44,16 @@ class App extends React.Component {
   handleIncreaseQuantity = (product) => {
     // console.log(product);
     const { products } = this.state;
+    // console.log(products);
     const index = products.indexOf(product);
 
-    products[index].qty += 1;
+    const docRef = doc(db, 'products', products[index].id);
+    // console.log(docRef);
+    let data = {
+      qty: products[index].qty + 1,
+    };
 
-    this.setState({
-      products,
-    });
+    updateDoc(docRef, data);
   };
 
   handleDecreaseQuantity = (product) => {
@@ -56,11 +65,12 @@ class App extends React.Component {
       return;
     }
 
-    products[index].qty -= 1;
+    const docRef = doc(db, 'products', products[index].id);
+    let data = {
+      qty: products[index].qty - 1,
+    };
 
-    this.setState({
-      products,
-    });
+    updateDoc(docRef, data);
   };
 
   handleDeleteProduct = (id) => {
@@ -92,8 +102,8 @@ class App extends React.Component {
   addProduct = async () => {
     const productsCol = collection(db, 'products');
     const newProduct = await addDoc(productsCol, {
-      title: 'Book',
-      price: 10,
+      title: 'Pen',
+      price: 15,
       qty: 1,
       img: '',
     });
